@@ -1,12 +1,17 @@
 * {
     overflow: hidden;
     padding: 0;
-    margin: 0;
+    
     box-sizing: border-box;
 }
 
+body {
+    display:flex;
+    justify-content: center;
+}
+
 .main {
-    width: 45vw;
+    width:  min(450px, 50vw);
     height: 70vh;
     border: 3px solid black;
     padding: 10px;
@@ -17,6 +22,7 @@
 
 .screen {
     height: 10vh;
+    width:  min(420px, 50vw);
     border: 3px solid black;
 }
 

@@ -1,5 +1,6 @@
 main = document.querySelector(".btn-row");
 
+const ButtonArray = [];
 class Button {
     constructor(value) {
         this.value = value;
