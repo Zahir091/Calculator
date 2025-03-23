@@ -22,7 +22,7 @@ class Button {
     }
 
     handleClick(type, value) {
-        if (type === 'number') {
+        if (type === 'number' || type==='decimal') {
             screenDisplay += value;
             screen.textContent = screenDisplay;
         }
@@ -44,10 +44,13 @@ class Button {
                 screenDisplay = "";
             }
         }
+        else if (type === 'delete') {
+            screenDisplay = screenDisplay.slice(0,-1);
+            screen.textContent = screenDisplay;
+        }
     }
 
     finalResult(result) {
-        
         screenDisplay = `${result}`;
         screen.textContent  = screenDisplay;
     }
@@ -113,4 +116,4 @@ function genCalc() {
 }
 
 genCalc();
-
+arithmetic = ['/', '*', '-', '+'];
