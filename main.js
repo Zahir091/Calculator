@@ -5,13 +5,34 @@ const ButtonArray = [];
 const operations = ['/', 'x', '-', '+', '='];
 operations.reverse();
 
+class ButtonHandler {
+    constructor(btnType, btnVal) {
+    //    /this.action = event;
+       this.typeOfButton = btnType;
+       this.valueOfButton = btnVal;
+
+       this.handleClick(this.typeOfButton, this.valueOfButton);
+    }
+
+    handleClick(type, value) {
+        console.log(type, value);
+    }
+
+
+
+}
 class Button {
-    constructor(value) {
+    constructor(value, typeofButton) {
         this.value = value;
+        this.type = typeofButton;
         this.buttonStruct = document.createElement('button');
         this.buttonStruct.classList.add('buttonStyle');
         this.buttonStruct.id = `${value}`;
         this.buttonStruct.textContent = value;
+      
+        this.buttonStruct.addEventListener('click', () => {
+            new ButtonHandler(this.type, this.value);
+        });
     }
 }
 
@@ -24,44 +45,43 @@ function genCalc() {
         btnRow.classList.add('btn-row');
         for(let i=n; i<(n+4); i++) { //i represents nth button
            if( i=== 1) {
-                const btn = new Button('cancel');
+                const btn = new Button('C', 'cancel');
                 btnRow.append(btn.buttonStruct);
            }
            else if (i===2) {
-                const btn = new Button('+ / -');
+                const btn = new Button('+ / -' , 'sign');
                 btnRow.append(btn.buttonStruct);
            }
            else if (i === 3) {
-                const btn = new Button('%');
+                const btn = new Button('%' , 'operation');
                 btnRow.append(btn.buttonStruct);
            }
             else if(i%4 != 0) {
                 number++;
                 switch(number) {
                     case 10:  {
-                        const btn = new Button('sqrt()');
+                        const btn = new Button('sqrt()', 'operation');
                         btnRow.append(btn.buttonStruct);
                         break;
                     }
                     case 11:  {
-                        const btn = new Button('0');
+                        const btn = new Button('0', 'number');
                         btnRow.append(btn.buttonStruct);
                         break;
                     }
                     case 12:  {
-                        const btn = new Button('.');
+                        const btn = new Button('.', 'decimal');
                         btnRow.append(btn.buttonStruct);
                         break;
                     }
                     default: {
-                        const btn = new Button(number);
+                        const btn = new Button(number , 'number');
                         btnRow.append(btn.buttonStruct);
                     } 
                 }
-    
             }
             else {
-                const btn = new Button(operations.pop());
+                const btn = new Button(operations.pop(), 'operation');
                 btnRow.append(btn.buttonStruct);
             }
         }
