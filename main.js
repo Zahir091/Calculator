@@ -3,28 +3,11 @@ screen = document.querySelector(".screen");
 let screenDisplay = '';
 
 
+
 const ButtonArray = [];
-const operations = ['/', 'x', '-', '+', '='];
-operations.reverse();
+const arithmetic = ['/', '*', '-', '+'];
+arithmetic.reverse();
 
-class ButtonHandler {
-    constructor(btnType, btnVal) {
-    //    /this.action = event;
-       this.type = btnType;
-       this.value = btnVal;
-       this.handleClick(this.type, this.value);
-    }
-
-    handleClick(type, value) {
-        screenDisplay = screenDisplay += `${value}`;
-        screen.textContent = screenDisplay;
-    }
-
-    updateScreen() {
-        screenDisplay = screenDisplay += `${value}`;
-        screen.textContent = screenDisplay;
-    }
-}
 
 
 class Button {
@@ -35,10 +18,38 @@ class Button {
         this.buttonStruct.classList.add('buttonStyle');
         this.buttonStruct.id = `${value}`;
         this.buttonStruct.textContent = value;
-      
-        this.buttonStruct.addEventListener('click', () => {
-            new ButtonHandler(this.type, this.value);
-        });
+        this.buttonStruct.addEventListener('click', () =>  this.handleClick(this.type, this.value));
+    }
+
+    handleClick(type, value) {
+        if (type === 'number') {
+            screenDisplay += value;
+            screen.textContent = screenDisplay;
+        }
+        else if (type === 'arithmetic') {
+            if (arithmetic.includes(screenDisplay.charAt(screenDisplay.length - 1))) {
+                console.log('Cannot use two operations at once');
+            } else {
+                screenDisplay += value;
+                screen.textContent = screenDisplay;
+            }
+        }
+        else if (type === 'equal') {
+            try {
+                let result = Function(`"use strict"; return (${screenDisplay})`)();
+                this.finalResult(result);
+            } catch (error) {
+                console.error("Invalid expression", error);
+                screen.textContent = "Error";
+                screenDisplay = "";
+            }
+        }
+    }
+
+    finalResult(result) {
+        
+        screenDisplay = `${result}`;
+        screen.textContent  = screenDisplay;
     }
 }
 
@@ -55,18 +66,22 @@ function genCalc() {
                 btnRow.append(btn.buttonStruct);
            }
            else if (i===2) {
-                const btn = new Button('+ / -' , 'sign');
+                const btn = new Button('delete' , 'delete');
                 btnRow.append(btn.buttonStruct);
            }
            else if (i === 3) {
-                const btn = new Button('%' , 'operation');
+                const btn = new Button('+/-' , 'sign');
                 btnRow.append(btn.buttonStruct);
+           }
+           else if(i=== 20) {
+            const btn = new Button('=' , 'equal');
+            btnRow.append(btn.buttonStruct);
            }
             else if(i%4 != 0) {
                 number++;
                 switch(number) {
                     case 10:  {
-                        const btn = new Button('sqrt()', 'operation');
+                        const btn = new Button('(  )', 'paraenthesis');
                         btnRow.append(btn.buttonStruct);
                         break;
                     }
@@ -87,7 +102,7 @@ function genCalc() {
                 }
             }
             else {
-                const btn = new Button(operations.pop(), 'operation');
+                const btn = new Button(arithmetic.pop(), 'arithmetic');
                 btnRow.append(btn.buttonStruct);
             }
         }
