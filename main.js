@@ -1,5 +1,7 @@
 mainGroup = document.querySelector(".btn-group");
-let screenDisplay = 0;
+screen = document.querySelector(".screen");
+let screenDisplay = '';
+
 
 const ButtonArray = [];
 const operations = ['/', 'x', '-', '+', '='];
@@ -8,19 +10,23 @@ operations.reverse();
 class ButtonHandler {
     constructor(btnType, btnVal) {
     //    /this.action = event;
-       this.typeOfButton = btnType;
-       this.valueOfButton = btnVal;
-
-       this.handleClick(this.typeOfButton, this.valueOfButton);
+       this.type = btnType;
+       this.value = btnVal;
+       this.handleClick(this.type, this.value);
     }
 
     handleClick(type, value) {
-        console.log(type, value);
+        screenDisplay = screenDisplay += `${value}`;
+        screen.textContent = screenDisplay;
     }
 
-
-
+    updateScreen() {
+        screenDisplay = screenDisplay += `${value}`;
+        screen.textContent = screenDisplay;
+    }
 }
+
+
 class Button {
     constructor(value, typeofButton) {
         this.value = value;

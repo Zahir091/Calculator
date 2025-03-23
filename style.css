@@ -24,6 +24,14 @@ body {
     height: 10vh;
     width:  100%;
     border: 3px solid black;
+    
+    padding: 10px;
+    
+    display:flex;
+    justify-content: right;
+    align-items: center;
+    
+    font-size: 50px;
 }
 
 .btn-group {
